@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Sucursales</title>
+
+<script id="local"></script>
+
+</head>
+<body>
+
+<div th:replace="header"></div>
+
+		<h1>Agregar sucursales</h1>
+		
+    <form role="form" action="#" th:action="@{/branches}" th:object="${branchform}" method="post">
+    <input type="hidden" th:field="*{id}" value="${branchform.getId()}" /> 
+        <p>Nombre: <input class="form-control" type="text" th:field="*{name}" value="${branchform.getName()}" /></p>
+        <p th:if="${#fields.hasErrors('name')}"  th:errors="*{name}">Test</p> 
+        <p><input class="btn btn-primary" type="submit" value="Crear" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    
+      <table class="table table-bordered" th:object="${lloc}" id="typeTable" border="1">
+      <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Equipos</th>
+      <th>Eliminar</th>
+      </tr>
+	<tr th:each="branch : ${lloc}">
+<form action="#" th:action="@{/branches}" th:method="delete">
+
+    <td th:text="${branch.id}">Id</td>
+    <input type="hidden" name="id" th:value="${branch.id}"/>
+    <td th:text="${branch.name}" >Content</td>
+    <input type="hidden" name="content" th:value="${branch.name}"/>
+     <td><a  th:href="@{'/branches/' + ${branch.id}}" th:text="@{Equipos asignados}"></a> </td>
+      
+        <td><input class="btn btn-danger" type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 

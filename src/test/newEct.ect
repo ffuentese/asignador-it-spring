@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model name="newEct" version="2">
+    <Class name="com.ffuentese.model.Device">
+        <Properties>
+            <Property name="runOnAndroid" type="boolean" value="false"/>
+        </Properties>
+        <Method name="setId">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="id" type="long" isExpected="false" expected="0" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="min\svalue" value="MIN_VALUE"/>
+                <Choice name="max\svalue" value="MAX_VALUE"/>
+            </Parameter>
+            <TestCase testSuite="default\ssuite">
+                <TestParameter choice="min\svalue"/>
+            </TestCase>
+            <TestCase testSuite="default\ssuite">
+                <TestParameter choice="max\svalue"/>
+            </TestCase>
+        </Method>
+        <Method name="setSerial">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="serial" type="String" isExpected="false" expected="" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="/null" value="/null"/>
+            </Parameter>
+            <TestCase testSuite="default\ssuite">
+                <TestParameter choice="/null"/>
+            </TestCase>
+        </Method>
+        <Method name="setNotes">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="notes" type="String" isExpected="false" expected="" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="/null" value="/null"/>
+            </Parameter>
+        </Method>
+    </Class>
+    <Class name="com.ffuentese.model.Model">
+        <Properties>
+            <Property name="runOnAndroid" type="boolean" value="false"/>
+        </Properties>
+        <Method name="setId">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="id" type="long" isExpected="false" expected="0" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="min\svalue" value="MIN_VALUE"/>
+                <Choice name="max\svalue" value="MAX_VALUE"/>
+            </Parameter>
+        </Method>
+        <Method name="setName">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="name" type="String" isExpected="false" expected="" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="/null" value="/null"/>
+            </Parameter>
+            <TestCase testSuite="default\ssuite">
+                <TestParameter choice="/null"/>
+            </TestCase>
+        </Method>
+        <Method name="setQty">
+            <Properties>
+                <Property name="methodRunner" type="String" value="Java Runner"/>
+                <Property name="wbMapBrowserToParam" type="boolean" value="false"/>
+                <Property name="wbBrowser" type="String" value="Chrome"/>
+                <Property name="wbMapStartUrlToParam" type="boolean" value="false"/>
+            </Properties>
+            <Parameter name="qty" type="int" isExpected="true" expected="0" linked="false">
+                <Properties>
+                    <Property name="wbIsOptional" type="boolean" value="false"/>
+                </Properties>
+                <Comments>
+                    <TypeComments/>
+                </Comments>
+                <Choice name="min\svalue" value="MIN_VALUE"/>
+                <Choice name="max\svalue" value="MAX_VALUE"/>
+            </Parameter>
+            <TestCase testSuite="default\ssuite">
+                <ExpectedValue value="0"/>
+            </TestCase>
+        </Method>
+    </Class>
+</Model>

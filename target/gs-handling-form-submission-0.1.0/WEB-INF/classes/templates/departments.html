@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+</div>
+
+		<h1>Agregar departamentos</h1>
+		
+    <form action="#" th:action="@{/departments}" th:object="${dept}" method="post">
+    <input type="hidden" th:field="*{id}" value="${dept.getId()}" /> 
+        <p>Nombre: <input type="text" th:field="*{name}" value="${dept.getName()}" /></p>
+        
+        <p><input type="submit" value="Crear" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    
+      <table th:object="${ldep}" id="deptTable" border="1">
+	<tr th:each="dept : ${ldep}">
+<form th:object="${dept}" action="#" th:action="@{/departments}" th:method="delete">
+
+    <td th:text="${dept.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${dept.getId()}"/>
+    <td th:text="${dept.getName()}" >Content</td>
+    <input type="hidden" name="content" th:value="${dept.getName()}"/>
+     <td><a  th:href="@{'/departments/' + ${dept.getId()}}">Equipos asignados</a> </td>
+      
+        <td><input type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 

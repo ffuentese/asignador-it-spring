@@ -1,0 +1,22 @@
+	<div th:fragment="header" class="container">
+
+		<div class="page-header">
+
+			<h1>Asignador de recursos</h1>
+			<nav class="navbar navbar-inverse" role="navigation">
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<a class="navbar-brand" href="/">Asignador</a>
+					<ul class="nav navbar-nav">
+						<li th:class="${#httpServletRequest.requestURI == '/devices' ? 'active' : null}"><a href="/devices">Equipos</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/models' ? 'active' : null}"><a href="/models">Modelos</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/brands' ? 'active' : null}"><a href="/brands">Marcas</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/employees' ? 'active' : null}"><a href="/employees">Empleados</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/branches' ? 'active' : null}"><a href="/branches">Sucursales</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/departments' ? 'active' : null}"><a href="/departments">Departamentos</a></li>
+						<li th:class="${#httpServletRequest.requestURI == '/types' ? 'active' : null}"><a href="/types">Tipos de equipo</a></li>
+
+					</ul>
+				</div>
+			</nav>
+
+		</div>

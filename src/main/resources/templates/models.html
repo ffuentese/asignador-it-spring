@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Modelos</title>
+
+<script id="local" type="text/javascript">
+
+$( document ).ready(function() {
+	$('tr').on('blur', 'td[contenteditable]', function() {
+		var that = this;
+	    $.post("ajax/modQtyModels", {
+	    modelId: $(this).closest('tr').children('td.idmodel').text(),
+	    qty: $(this).closest('tr').children('td.editQty').text(),
+	    },
+	    function(data) {	
+	    		if(data['success'] == true) {
+	    		console.log(data['success']);
+	    		$(that).closest('tr').children('td.editQty').addClass("success");
+	    		} else {
+	    			$(that).closest('tr').children('td.editQty').addClass("danger");
+	    		}
+	    	},
+	    "json",
+	    ).fail( function( jqXHR, textStatus, errorThrown ) {
+	    	$(that).closest('tr').children('td.editQty').addClass("danger");
+	    });;
+	    }
+);
+	});
+</script>
+
+</head>
+
+<body>
+
+<div th:replace="header"></div>
+
+
+		<h1>Agregar modelos</h1>
+		
+    <form role="form" action="#" th:action="@{/models}" th:object="${model}" method="post">
+    <input type="hidden" th:field="*{id}" value="${model.getId()}" /> 
+    <div id="brand">
+    <select class="form-control" name="brand" >
+        <option value="" disabled="disabled" selected="selected">Seleccionar marca:</option>
+        <option th:each="brand : ${lbra}"
+                th:value="${brand.getId()}"
+                th:text="${brand.getId()}+' : '+${brand.getName()}"></option>
+    </select>  <a th:href="@{/brands}" th:text="@{Agregar marca}" ></a>
+    </div>
+    <div id="type">
+      <select class="form-control" name="type" id="type">
+        <option value="" disabled="disabled" selected="selected">Seleccionar tipo de equipo:</option>
+          <option th:each="type : ${ltype}"
+                th:value="${type.getId()}"
+                th:text="${type.getId()}+' : '+${type.getName()}"></option>
+    </select>  <a th:href="@{/types}" th:text="@{Agregar tipo de equipo}" ></a> 
+    </div>
+        <p>Nombre: <input class="form-control" type="text" th:field="*{name}" value="${model.getName()}" /></p>
+         <p>Cantidad:  <input class="form-control" type="number" th:field="*{qty}"  value="${model.getQty()}" /> </p>
+        <p><input class="btn btn-primary" type="submit" value="Crear" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    
+      <table class="table table-bordered" th:object="${lmod}" id="modelTable" border="1">
+	<tr>
+	<th>Id</th>
+	<th>Modelo</th>
+	<th>Marca</th>
+	<th>Tipo</th>
+	<th>Unidades disponibles</th>
+	<th>Equipos asignados</th>
+	<th>Eliminar</th>	
+	</tr>
+	<tr  th:each="model : ${lmod}">
+<form th:object="${model}" action="#" th:action="@{/models}" th:method="delete">
+
+    <td class="idmodel" th:text="${model.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${model.getId()}"/>
+    <td th:text="${model.getName()}" ></td>
+    <input type="hidden" name="name" th:value="${model.getName()}"/>
+    <td th:text="${model.getBrand()}" ></td>
+    <input type="hidden" name="brand" th:value="${model.getBrand().getId()}"/>
+    <td th:text="${model.getType()}"></td>
+    <input type="hidden" name="type" th:value="${model.getType().getId()}"/>
+    <td class="editQty" th:text="${model.getQty()}" contenteditable></td>
+      <input type="hidden" name="qty" th:field="*{qty}" th:value="${model.getQty()}"/>
+     <td><a  th:href="@{'/models/' + ${model.getId()}}" th:text="@{Equipos asignados}"></a> </td>
+      
+        <td><input class="btn btn-danger" type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <button onclick="window.history.go(-1)">Back</button>
+    </div>
+   </body>
+  </html> 

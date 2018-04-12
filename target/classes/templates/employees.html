@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Empleados</title>
+
+<script id="local"></script>
+
+</head>
+<body>
+<div th:replace="header"></div>
+	<h2>Agregar empleados</h2>
+    <form role="form" action="#" th:action="@{/employees}" th:object="${employee}" method="post">
+    	<!-- <p>Id: <input type="text" th:field="*{id}" /></p> -->
+    	<div class="form-group">
+    	    <label class="col-lg-2 control-label">Nombre</label>
+        <p><input placeholder="Nombre" class="form-control" type="text" th:field="*{name}" /></p>
+        <p th:if="${#fields.hasErrors('name')}"  th:errors="*{name}">Test</p> 
+        </div>
+        <div class="form-group">
+          <div class="departments" th:object="${listd}">
+          <label class="col-lg-2 control-label">Departamento</label>
+           <select class="form-control" name="dept" >
+        <option value="">Seleccionar departamento:</option>
+        <option th:each="dep : ${listd}"
+                th:value="${dep.getId()}"
+                th:text="${dep.getId()}+' : '+${dep.getName()}"></option>
+                </select>  <a th:href="@{/departments}" th:text="@{Agregar departamentos}" ></a> </div> 
+                
+                </div>
+                <div class="form-group">
+         	<div class="branches" th:object="${lloc}">
+         	<label class="col-lg-2 control-label">Sucursal</label>
+           <select class="form-control" name="branch" >
+        <option value="">Seleccionar sucursal:</option>
+        <option th:each="loc : ${lloc}"
+                th:value="${loc.getId()}"
+                th:text="${loc.getId()}+' : '+${loc.getName()}"></option>                
+    </select> <a th:href="@{/branches}" th:text="@{Agregar sucursal}" ></a> </div>
+                   
+    </div>
+         
+         
+        <p><input class="btn btn-primary" type="submit" value="Submit" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+    <table class="table table-bordered" th:object="${listg}" id="employeeTable" border="1">
+    <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Departamento</th>
+    <th>Equipos</th>
+    <th>Eliminar</th>
+    </tr>
+    
+	<tr th:each="employee : ${listg}">
+<form th:object="${employee}" action="#" th:action="@{/employees}" th:method="delete">
+
+    <td th:text="${employee.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${employee.getId()}"/>
+    <td th:text="${employee.getName()}" >Content</td>
+    <input type="hidden" name="content" th:value="${employee.getName()}"/>
+        <td th:text="${employee.getDept()}" >Content</td>
+    <input type="hidden" name="content" th:value="${employee.getDept()}"/>
+    <td><a  th:href="@{'/employees/' + ${employee.getId()}}">Equipos asignados</a> </td>
+        <td><input class="btn btn-danger" type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <br />
+    <button onclick="window.history.go(-1)">Back</button>
+</body>
+</html>

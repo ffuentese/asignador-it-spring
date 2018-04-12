@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+</div>
+
+		<h1>Agregar tipos</h1>
+		
+    <form action="#" th:action="@{/types}" th:object="${type}" method="post">
+    <input type="hidden" th:field="*{id}" value="${type.getId()}" /> 
+        <p>Nombre: <input type="text" th:field="*{name}" value="${type.getName()}" /></p>
+        
+        <p><input type="submit" value="Crear" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    
+      <table th:object="${ltype}" id="typeTable" border="1">
+	<tr th:each="type : ${ltype}">
+<form th:object="${type}" action="#" th:action="@{/types}" th:method="delete">
+
+    <td th:text="${type.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${type.getId()}"/>
+    <td th:text="${type.getName()}" >Content</td>
+    <input type="hidden" name="content" th:value="${type.getName()}"/>
+     <td><a  th:href="@{'/types/' + ${type.getId()}}">.</a> </td>
+      
+        <td><input type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 

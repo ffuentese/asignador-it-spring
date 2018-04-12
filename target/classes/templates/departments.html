@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Departamentos</title>
+
+<script id="local"></script>
+
+</head>
+<body>
+<div th:replace="header"></div>
+
+		<h1>Agregar departamentos</h1>
+		
+    <form role="form" action="#" th:action="@{/departments}" th:object="${dept}" method="post">
+    <input type="hidden" th:field="*{id}" value="${dept.getId()}" /> 
+        <p>Nombre: <input class="form-control" type="text" th:field="*{name}" value="${dept.getName()}" /></p>
+        <p th:if="${#fields.hasErrors('name')}"  th:errors="*{name}">Test</p> 
+        <p><input class="btn btn-primary" type="submit" value="Crear" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    
+      <table class="table table-bordered" th:object="${ldep}" id="deptTable" border="1">
+      <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Equipos</th>
+      <th>Eliminar</th>
+      </tr>
+	<tr th:each="dept : ${ldep}">
+<form th:object="${dept}" action="#" th:action="@{/departments}" th:method="delete">
+
+    <td th:text="${dept.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${dept.getId()}"/>
+    <td th:text="${dept.getName()}" >Content</td>
+    <input type="hidden" name="content" th:value="${dept.getName()}"/>
+     <td><a  th:href="@{'/departments/' + ${dept.getId()}}">Equipos asignados</a> </td>
+      
+        <td><input class="btn btn-danger" type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 

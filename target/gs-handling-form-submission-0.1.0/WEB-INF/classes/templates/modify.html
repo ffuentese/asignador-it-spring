@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+</head>
+<body>
+
+</div>
+
+		<h1>Modificar equipo</h1>
+		
+
+		
+    <form action="#" th:action="@{/devices}" th:object="${device}" id="device" method="post">
+    <input type="hidden" th:field="*{id}" value="${device.getId()}" />
+	<input type="hidden" th:field="*{type}" value="${device.getType()}" />
+	<input type="hidden" th:field="*{brand}" value="${device.getBrand()}" />
+	<input type="hidden" th:field="*{model}" value="${device.getModel()}" />
+		    <p>Tipo de equipo: <input type="text" name="type" th:value="${device.getType()}" disabled/></p>
+        <p>Marca: <input type="text" name="brand" th:value="${device.getBrand()}"  disabled/></p>
+		<p>Modelo: <input type="text" name="model" th:value="${device.getModel()}"  disabled /></p>	
+   <div class="cambiodd"  th:object="${lemp}">
+           Empleado: 
+          <select name="employee" >
+        <option value="">Seleccionar empleado:</option>
+        <option th:each="employee : ${lemp}"
+                th:value="${employee.getId()}"
+                th:text="${employee.getId()}+' : '+${employee.getName()}"
+                th:selected="${employee.getId()} == ${device.getEmployee().getId()} ? true : false">
+                </option>
+    </select></div> 
+    <p>Serial: <input type="text" name="serial" th:field="*{serial}" /></p>
+    <p>Observaciones: <textarea  rows = "10" cols = "80" th:field = "*{notes}" form = "device" > </textarea> </p>
+        <p><input type="submit" value="Modificar" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 

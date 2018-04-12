@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Agregar empleados</h1>
+    <form action="#" th:action="@{/employees}" th:object="${employee}" method="post">
+    	<!-- <p>Id: <input type="text" th:field="*{id}" /></p> -->
+        <p>Nombre: <input type="text" th:field="*{name}" /></p>
+          <div class="departments" th:object="${listd}">
+           <select name="dept" >
+        <option value="">Seleccionar departamento:</option>
+        <option th:each="dep : ${listd}"
+                th:value="${dep.getId()}"
+                th:text="${dep.getId()}+' : '+${dep.getName()}"></option>
+                </select> </div>
+         	<div class="branches" th:object="${lloc}">
+           <select name="branch" >
+        <option value="">Seleccionar sucursal:</option>
+        <option th:each="loc : ${lloc}"
+                th:value="${loc.getId()}"
+                th:text="${loc.getId()}+' : '+${loc.getName()}"></option>                
+    </select> <a th:href="@{/branches}" th:text="@{Agregar sucursal}" ></a> </div>
+         
+         
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+    <table th:object="${listg}" id="employeeTable" border="1">
+	<tr th:each="employee : ${listg}">
+<form th:object="${employee}" action="#" th:action="@{/employees}" th:method="delete">
+
+    <td th:text="${employee.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${employee.getId()}"/>
+    <td th:text="${employee.getName()}" >Content</td>
+    <input type="hidden" name="content" th:value="${employee.getName()}"/>
+        <td th:text="${employee.getDept()}" >Content</td>
+    <input type="hidden" name="content" th:value="${employee.getDept()}"/>
+    <td><a  th:href="@{'/employees/' + ${employee.getId()}}">Equipos asignados</a> </td>
+        <td><input type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    
+    <br />
+    <button onclick="window.history.go(-1)">Back</button>
+</body>
+</html>

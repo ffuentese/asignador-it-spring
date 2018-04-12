@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!-- <div th:fragment="cambiodd" id="cambio"> -->
+<select th:fragment="cambiodd" name="employee" >
+        <option value="">Seleccionar empleado:</option>
+        <option th:each="employee : ${lemp}"
+                th:value="${employee.getId()}"
+                th:text="${employee.getId()}+' : '+${employee.getName()}"></option>
+    </select>
+
+</html>

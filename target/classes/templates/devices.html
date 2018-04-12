@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Asignaci&oacute;n de equipos</title>
+
+
+
+</head>
+<head>
+	 <script id="local" type="text/javascript">
+	 $( document ).ready(function() {
+	 var html = '';
+	 $('select#type').change(
+        function() {
+            $.getJSON("/ajax/dropdown_brand", {
+                typeId : $(this).val(),
+                ajax : 'true'
+            }, function(data) {
+                html = '<option disabled="disabled" value="">Seleccionar marca:</option>';
+				data.forEach(function(item, index, all) {
+       			console.log(item.name);
+       			html +='<option value="' + item.id + '">'
+                           + item.id + ' : ' + item.name + '</option>';
+    });
+                html += '</option>';
+                $('select#brand').html(html);
+                $('select#brand').change();
+            });
+        }); 
+	 $('select#brand').change(
+        function() {
+            $.getJSON("/ajax/dropdown_model", {
+                brandId : $(this).val(),
+                typeId : $('select#type').val(), 
+                ajax : 'true'
+            }, function(data) {
+                html = '<option disabled="disabled" value="">Seleccionar modelo:</option>';
+				data.forEach(function(item, index, all) {
+       			console.log(item.name);
+       			html +='<option value="' + item.id + '">'
+                           + item.id + ' : ' + item.name + '</option>';
+    });
+                html += '</option>';
+                $('select#model').html(html);
+            });
+        }); 
+        });</script>
+</head>
+<body>
+
+<div th:replace="header"></div>
+
+		<h1>Form</h1>
+		
+    <form role="form" action="#" th:action="@{/devices}" th:object="${device}" id="device" method="post">
+    	<!-- <p>Id: <input type="text" th:field="*{id}" /></p> -->
+          <div class="type" th:object="${ltype}">
+           <select class="form-control" name="type" id="type" >
+        <option value="">Seleccionar tipo de equipo:</option>
+        <option th:each="type : ${ltype}"
+                th:value="${type.getId()}"
+                th:text="${type.getId()}+' : '+${type.getName()}"></option>
+    </select>   <a th:href="@{/types}" th:text="@{Agregar tipos de equipo}" ></a> </div>    
+  <div class="brand" th:object="${lbra}">
+           <select class="form-control" name="brand" id="brand" >
+        <option value="">Seleccionar marca:</option>
+        <option th:each="brand : ${lbra}"
+                th:value="${brand.getId()}"
+                th:text="${brand.getId()}+' : '+${brand.getName()}"></option>
+    </select>  <a th:href="@{/brands}" th:text="@{Agregar marcas}" ></a>  </div>
+
+      <div class="model" id="modellist">
+           <select class="form-control" name="model" id="model">
+        <option value="" disabled="disabled" selected="selected">Seleccionar modelo:</option>
+        <option></option>
+    </select>  <a th:href="@{/models}" th:text="@{Agregar modelos}" ></a>  </div>    
+          <div class="cambiodd" th:fragment="cambiodd" th:object="${lemp}">
+           <select class="form-control" name="employee" >
+        <option value="">Seleccionar empleado:</option>
+        <option th:each="employee : ${lemp}"
+                th:value="${employee.getId()}"
+                th:text="${employee.getId()}+' : '+${employee.getName()}"></option>
+    </select>  <a th:href="@{/employees}" th:text="@{Agregar empleado}" ></a> </div>
+    <p>Serial: <input class="form-control" type="text" name="serial" th:field="*{serial}" /></p>
+    <p>Observaciones: <textarea class="form-control" rows = "10" cols = "80" th:field = "*{notes}" form = "device" > </textarea> </p>
+        <p><input class="btn btn-primary" type="submit" value="Crear" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+     <table class="table table-bordered" th:object="${listg}" id="deviceTable" border="1">
+     <tr>
+     <th>Id</th>
+     <th>Tipo de equipo</th>
+     <th>Marca</th>
+     <th>Modelo</th>
+     <th>Asignado a</th>
+     <th>Serie</th>
+     <th>Modificar</th>
+     <th>Eliminar</th>
+     </tr>
+	<tr th:each="device : ${listg}">
+
+        <form th:object="${device}" th:action="@{/modify}" th:method="post">
+    
+
+    <td th:text="${device.getId()}">Id</td>
+    <input type="hidden" name="id" th:value="${device.getId()}"/>
+    <td th:text="${device.getType()}" >Device Type</td>
+    <input type="hidden" name="type" th:value="${device.getType().getId()}"/>
+        <td th:text="${device.getBrand().getName()}" >Brand</td>
+    <input type="hidden" name="brand" th:value="${device.getBrand().getId()}"/>
+            <td th:text="${device.getModel().getName()}" >Model</td>
+    <input type="hidden" name="model" th:value="${device.getModel().getId()}"/>
+            <td class="dropdown" th:text="${device.getEmployee()}" >Employee</td>
+    <input class="dd" type="hidden" name="employee" th:value="${device.getEmployee().getId()}"/> 
+    <td th:text="${device.getSerial()}">Serial Num</td>
+    <input type="hidden" name="serial" th:value="${device.getSerial()}" />
+    <input type="hidden" name="notes" th:value="${device.getNotes()}" />
+     <td><input class="btn btn-warning" name="modificar" type="submit" value="Modificar" /></td>
+        <td><input class="btn btn-danger" name="borrar" type="submit" value="Eliminar" /></td>
+        </form>
+    </tr>
+    </table>
+    <br />
+
+    <button onclick="window.history.go(-1)">Back</button>
+    
+
+    </div>
+</body>
+</html>

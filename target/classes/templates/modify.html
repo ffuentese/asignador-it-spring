@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="head">
+
+<title id="originalTitle">Empleados</title>
+
+<script id="local"></script>
+
+</head>
+<body>
+
+<div th:replace="header"></div>
+
+		<h1>Modificar equipo</h1>
+		
+
+		
+    <form role="form" action="#" th:action="@{/devices}" th:object="${device}" id="device" method="post">
+    <input type="hidden" th:field="*{id}" value="${device.getId()}" />
+	<input type="hidden" th:field="*{type}" value="${device.getType()}" />
+	<input type="hidden" th:field="*{brand}" value="${device.getBrand()}" />
+	<input type="hidden" th:field="*{model}" value="${device.getModel()}" />
+	  <div class="form-group">
+	      <label class="col-lg-2 control-label">Tipo</label>
+		    <p class="form-control-static" th:text="${device.getType()}" ></p>
+		   <label class="col-lg-2 control-label">Marca</label>  
+        <p class="form-control-static" th:text="${device.getBrand()}"></p>
+        <label class="col-lg-2 control-label">Modelo</label>  
+		<p class="form-control-static" th:text="${device.getModel()}"></p>	
+   <div th:object="${lemp}">
+           Empleado: 
+          <select class="form-control" name="employee" >
+        <option value="">Seleccionar empleado:</option>
+        <option th:each="employee : ${lemp}"
+                th:value="${employee.getId()}"
+                th:text="${employee.getId()}+' : '+${employee.getName()}"
+                th:selected="${employee.getId()} == ${device.getEmployee().getId()} ? true : false">
+                </option>
+    </select></div> 
+    <p>Serial: <input class="form-control" type="text" name="serial" th:field="*{serial}" /></p>
+    <p>Observaciones: <textarea class="form-control" rows = "10" cols = "80" th:field = "*{notes}" form = "device" > </textarea> </p>
+      </div>
+        <p><input class="btn btn-primary" type="submit" value="Modificar" /> <input class="btn btn-warning" type="reset" value="Reset" /></p>
+    </form>
+    
+    <br />
+    <button onclick="window.history.go(-1)">Back</button>
+   </body>
+  </html> 
